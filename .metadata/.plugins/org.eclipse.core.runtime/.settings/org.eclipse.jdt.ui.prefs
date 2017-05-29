@@ -1,0 +1,21 @@
+content_assist_disabled_computers=org.eclipse.jdt.ui.textProposalCategory\u0000org.eclipse.recommenders.calls.rcp.proposalCategory.templates\u0000org.eclipse.mylyn.java.ui.javaAllProposalCategory\u0000org.eclipse.jdt.ui.javaAllProposalCategory\u0000org.eclipse.jdt.ui.javaTypeProposalCategory\u0000org.eclipse.jdt.ui.javaNoTypeProposalCategory\u0000org.eclipse.recommenders.chain.rcp.proposalCategory.chain\u0000
+content_assist_lru_history=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?><history maxLHS\="100" maxRHS\="10"><lhs name\="ExerciseSheet3eigenerVersuch.RandomVariable"><rhs name\="ExerciseSheet3eigenerVersuch.ExponentialRandomVariable"/><rhs name\="ExerciseSheet4eigenerVersuch.NormalRandomVariable"/></lhs><lhs name\="ExerciseSheet4eigenerVersuch.NormalRandomVariable"><rhs name\="ExerciseSheet4eigenerVersuch.NormalRandomVariable"/></lhs><lhs name\="ExerciseSheet5eigenerVersuch.TwoDimensionalBrownianMotion"><rhs name\="ExerciseSheet5eigenerVersuch.TwoDimensionalBrownianMotion"/></lhs><lhs name\="ExerciseSheet5eigenerVersuch.BivariateNormalRandomVariableGenerator"><rhs name\="ExerciseSheet5eigenerVersuch.BoxMuellerAR"/><rhs name\="ExerciseSheet5eigenerVersuch.BiVariateNormalRandomVariableInversion"/></lhs><lhs name\="ExerciseSheet5eigenerVersuch.BoxMuellerAR"><rhs name\="ExerciseSheet5eigenerVersuch.BoxMuellerAR"/></lhs><lhs name\="ExerciseSheet5eigenerVersuch.BiVariateNormalRandomVariableInversion"><rhs name\="ExerciseSheet5eigenerVersuch.BiVariateNormalRandomVariableInversion"/></lhs><lhs name\="ExerciseSheet5Solution.BivariateNormalRandomVariableGenerator"><rhs name\="ExerciseSheet5Solution.BiVariateNormalInversion"/></lhs><lhs name\="net.finmath.stochastic.RandomVariableInterface"><rhs name\="net.finmath.montecarlo.RandomVariable"/></lhs><lhs name\="net.finmath.time.TimeDiscretizationInterface"><rhs name\="net.finmath.time.TimeDiscretization"/></lhs><lhs name\="java.lang.Iterable"><rhs name\="net.finmath.time.TimeDiscretization"/></lhs><lhs name\="net.finmath.time.TimeDiscretization"><rhs name\="net.finmath.time.TimeDiscretization"/></lhs><lhs name\="net.finmath.montecarlo.BrownianMotionInterface"><rhs name\="net.finmath.montecarlo.CorrelatedBrownianMotion"/><rhs name\="net.finmath.montecarlo.BrownianBridge"/><rhs name\="net.finmath.montecarlo.BrownianMotion"/></lhs><lhs name\="net.finmath.montecarlo.BrownianMotion"><rhs name\="net.finmath.montecarlo.BrownianMotion"/></lhs><lhs name\="net.finmath.montecarlo.CorrelatedBrownianMotion"><rhs name\="net.finmath.montecarlo.CorrelatedBrownianMotion"/></lhs><lhs name\="net.finmath.montecarlo.MonteCarloSimulationInterface"><rhs name\="net.finmath.montecarlo.assetderivativevaluation.MonteCarloBlackScholesModel"/></lhs><lhs name\="net.finmath.montecarlo.assetderivativevaluation.AssetModelMonteCarloSimulationInterface"><rhs name\="net.finmath.montecarlo.assetderivativevaluation.MonteCarloBlackScholesModel"/></lhs><lhs name\="net.finmath.montecarlo.assetderivativevaluation.MonteCarloBlackScholesModel"><rhs name\="net.finmath.montecarlo.assetderivativevaluation.MonteCarloBlackScholesModel"/></lhs><lhs name\="net.finmath.montecarlo.IndependentIncrementsInterface"><rhs name\="net.finmath.montecarlo.BrownianBridge"/><rhs name\="net.finmath.montecarlo.BrownianMotion"/></lhs><lhs name\="Exercise7.Libor_MC_DriftAdjusted_Chris"><rhs name\="Exercise7.Libor_MC_DriftAdjusted_Chris"/></lhs></history>
+content_assist_number_of_computers=24
+content_assist_proposals_background=255,255,255
+content_assist_proposals_foreground=0,0,0
+eclipse.preferences.version=1
+fontPropagated=true
+org.eclipse.jdt.internal.ui.navigator.layout=2
+org.eclipse.jdt.ui.editor.tab.width=
+org.eclipse.jdt.ui.formatterprofiles.version=12
+org.eclipse.jdt.ui.javadoclocations.migrated=true
+org.eclipse.jdt.ui.text.code_templates_migrated=true
+org.eclipse.jdt.ui.text.custom_code_templates=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?><templates/>
+org.eclipse.jdt.ui.text.custom_templates=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?><templates/>
+org.eclipse.jdt.ui.text.templates_migrated=true
+org.eclipse.jface.textfont=1|Monaco|11.0|0|COCOA|1|;
+proposalOrderMigrated=true
+spelling_locale_initialized=true
+tabWidthPropagated=true
+useAnnotationsPrefPage=true
+useQuickDiffPrefPage=true

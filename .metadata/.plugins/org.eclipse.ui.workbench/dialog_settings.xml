@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="org.eclipse.ui.internal.QuickAccess">
+		<item value="500" key="dialogHeight"/>
+		<item value="800" key="dialogWidth"/>
+		<list key="textEntries">
+		</list>
+		<list key="orderedElements">
+		</list>
+		<list key="orderedProviders">
+		</list>
+		<list key="textArray">
+		</list>
+	</section>
+	<section name="PreferencesImportWizard">
+	</section>
+	<section name="NewWizardAction">
+	</section>
+	<section name="ImportExportAction">
+		<item value="org.eclipse.egit.ui.internal.clone.GitCloneWizard" key="ImportExportPage.STORE_SELECTED_IMPORT_WIZARD_ID"/>
+		<list key="ImportExportPage.STORE_EXPANDED_IMPORT_CATEGORIES">
+			<item value="org.eclipse.ui.Basic"/>
+			<item value="org.eclipse.egit.ui.internal.clone.gitclonecategory"/>
+		</list>
+	</section>
+	<section name="ZipFileImportWizard">
+	</section>
+	<section name="FileSystemImportWizard">
+		<item value="false" key="WizardFileSystemResourceImportPage1.STORE_CREATE_CONTAINER_STRUCTURE_ID"/>
+		<item value="false" key="WizardFileSystemResourceImportPage1.STORE_OVERWRITE_EXISTING_RESOURCES_ID"/>
+		<list key="WizardFileSystemResourceImportPage1.STORE_SOURCE_NAMES_ID">
+			<item value="/Users/Chris/Downloads"/>
+			<item value="/Users/Chris/Downloads/exercise5"/>
+			<item value="/Users/Chris/Desktop"/>
+			<item value="/Users/Chris/Downloads/exercise4"/>
+			<item value="/Users/Chris/Java/workspaceEclips/Mathematical FInance"/>
+			<item value="/Users/Chris/Downloads/exercise3"/>
+			<item value="/Users/Chris/Downloads/exercise2"/>
+			<item value="/Users/Chris/Downloads/exercise1"/>
+			<item value="/Users/Chris/Downloads/Exercise 6/com/lorenzotorricelli/ex6"/>
+			<item value="/Users/Chris/Downloads/Exercise 5-2/com/lorenzotorricelli/solex5"/>
+			<item value="/Users/Chris/Downloads/Exercise 5/com/lorenzotorricelli/solex5"/>
+			<item value="/Users/Chris/Downloads/Exercise 4/com/lorenzotorricelli/solex4"/>
+			<item value="/Users/Chris/Downloads/Exercise 3/com/lorenzotorricelli/ex3sol"/>
+			<item value="/Users/Chris/Downloads/Exercise 2/com/lorenzotorricelli/ex2sol"/>
+			<item value="/Users/Chris/Downloads/Exercise 2/com"/>
+			<item value="/Users/Chris/Downloads/Exercise 1-2/com/lorenzotorricelli/solutionex1"/>
+			<item value="/Users/Chris/Downloads/Exercise 1-2"/>
+			<item value="/Users/Chris/Downloads/Exercise 1/com/lorenzotorricelli/solutionex1"/>
+		</list>
+	</section>
+</section>
