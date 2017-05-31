@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Delete resource &apos;NumericalMethodsForMathematicalFinance&apos;" deleteContents="false" description="Delete resource &apos;NumericalMethodsForMathematicalFinance&apos;" element1="/NumericalMethodsForMathematicalFinance" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1464765230682"/>
-</session>

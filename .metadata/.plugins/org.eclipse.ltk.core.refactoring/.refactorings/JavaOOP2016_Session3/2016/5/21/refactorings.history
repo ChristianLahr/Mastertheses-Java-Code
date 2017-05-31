@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Copy package &apos;com.lorenzotorricelli.useful&apos; to &apos;Exercise NMF 2016/src&apos;&#x0A;- Original project: &apos;JavaOOP2016_Session3&apos;&#x0A;- Destination element: &apos;Exercise NMF 2016/src&apos;&#x0A;- Original element: &apos;JavaOOP2016_Session3/src/Examples/com.lorenzotorricelli.useful&apos;" description="Copy package" destination="=Exercise NMF 2016/src" element1="/src\/Examples&lt;com.lorenzotorricelli.useful" flags="589830" fragments="1" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyPackages" stamp="1464360186688" version="1.0"/>
-</session>
