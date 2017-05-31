@@ -3,20 +3,19 @@ package ExposureExpiriments;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
+import org.threeten.bp.LocalDate;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
 import org.joda.time.DateTimeConstants;
-import org.joda.time.LocalDate;
 import org.junit.Assert;
 import org.junit.Test;
 
 import net.finmath.exception.CalculationException;
 import net.finmath.marketdata.model.curves.DiscountCurve;
 import net.finmath.marketdata.model.curves.ForwardCurve;
-import net.finmath.montecarlo.RandomVariable;
 import net.finmath.montecarlo.interestrate.LIBORMarketModel;
 import net.finmath.montecarlo.interestrate.LIBORMarketModel.Measure;
 import net.finmath.montecarlo.interestrate.LIBORMarketModelInterface;
@@ -29,7 +28,6 @@ import net.finmath.montecarlo.interestrate.products.AbstractLIBORMonteCarloProdu
 import net.finmath.montecarlo.interestrate.products.Swap;
 import net.finmath.montecarlo.interestrate.products.SwapLeg;
 import net.finmath.montecarlo.interestrate.products.components.AbstractNotional;
-import net.finmath.montecarlo.interestrate.products.components.ExposureEstimator;
 import net.finmath.montecarlo.interestrate.products.components.Notional;
 import net.finmath.montecarlo.interestrate.products.indices.AbstractIndex;
 import net.finmath.montecarlo.interestrate.products.indices.LIBORIndex;
@@ -47,7 +45,7 @@ import java.io.FileWriter;
  * @author Christian Fries & Christian Lahr
  *
  */
-public class GenerateQuantileExposure {
+public class GenerateQuantileExposure{
 
 	private final NumberFormat formatter6 = new DecimalFormat("0.000000", new DecimalFormatSymbols(new Locale("en")));
 	private final static DecimalFormat formatterGerman = new DecimalFormat("0.00000000", new DecimalFormatSymbols(Locale.GERMAN));
@@ -94,9 +92,9 @@ public class GenerateQuantileExposure {
 							System.out.println("curve: " + u + "\t vola: "+ vola + "\t "+ frequency + "\t"+ yyyy);
 							
 							ScheduleInterface legScheduleRec = ScheduleGenerator.createScheduleFromConventions(
-									new LocalDate(2015, DateTimeConstants.JANUARY, 03) /* referenceDate */, 
-									new LocalDate(2015, DateTimeConstants.JANUARY, 06) /* startDate */,
-									new LocalDate(yyyy, DateTimeConstants.JANUARY, 06) /* maturityDate */,
+									LocalDate.of(2015, DateTimeConstants.JANUARY, 03) /* referenceDate */, 
+									LocalDate.of(2015, DateTimeConstants.JANUARY, 06) /* startDate */,
+									LocalDate.of(yyyy, DateTimeConstants.JANUARY, 06) /* maturityDate */,
 									frequency /* frequency */,
 									ScheduleGenerator.DaycountConvention.ACT_365 /* daycountConvention */,
 									ScheduleGenerator.ShortPeriodConvention.FIRST /* shortPeriodConvention */,
@@ -106,9 +104,9 @@ public class GenerateQuantileExposure {
 									0 /* paymentOffsetDays */);
 					
 							ScheduleInterface legSchedulePay = ScheduleGenerator.createScheduleFromConventions(
-									new LocalDate(2015, DateTimeConstants.JANUARY, 03) /* referenceDate */, 
-									new LocalDate(2015, DateTimeConstants.JANUARY, 06) /* startDate */,
-									new LocalDate(yyyy, DateTimeConstants.JANUARY, 06) /* maturityDate */,
+									LocalDate.of(2015, DateTimeConstants.JANUARY, 03) /* referenceDate */, 
+									LocalDate.of(2015, DateTimeConstants.JANUARY, 06) /* startDate */,
+									LocalDate.of(yyyy, DateTimeConstants.JANUARY, 06) /* maturityDate */,
 									frequency /* frequency */,
 									ScheduleGenerator.DaycountConvention.ACT_365 /* daycountConvention */,
 									ScheduleGenerator.ShortPeriodConvention.FIRST /* shortPeriodConvention */,
@@ -120,7 +118,7 @@ public class GenerateQuantileExposure {
 							AbstractNotional notional = new Notional(1.0);
 							AbstractIndex index = new LIBORIndex("forwardCurve", 0.0, 0.25);   // Achtung, die periodLength muss verkleinert werden, wenn die frequency des payerlegs höher als QUARTERLY ist.
 							
-							//loop over fixedCoupon value
+							//loop over fixedCoupon value 
 							for(int couponIndex = 0; couponIndex <= 20; couponIndex++){			
 								
 								double fixedCoupon = 0.005 * couponIndex;  
