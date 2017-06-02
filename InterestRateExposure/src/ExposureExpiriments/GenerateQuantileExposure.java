@@ -51,7 +51,7 @@ public class GenerateQuantileExposure{
 	private final static DecimalFormat formatterGerman = new DecimalFormat("0.00000000", new DecimalFormatSymbols(Locale.GERMAN));
 	private final static String format = "no german";
 	
-	private static String CSVName = "Exposure_0.05Quantile_26052017_timeSeriesTest.csv";
+	private static String CSVName = "Exposure_0.05Quantile_26052017_timeSeriesTest2.csv";
 	private static FileWriter fileWriter = null;
 	static Boolean continueWriting = true;
 
