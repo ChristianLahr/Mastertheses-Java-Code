@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="ExposureTest" project="finmath lib" tests="2" started="2" failures="0" errors="0" ignored="0">
+  <testsuite name="net.finmath.montecarlo.interestrate.products.components.ExposureTest" time="89.064">
+    <testcase name="testExpectedPositiveExposure" classname="net.finmath.montecarlo.interestrate.products.components.ExposureTest" time="3.003"/>
+    <testcase name="testAgainstSwaption" classname="net.finmath.montecarlo.interestrate.products.components.ExposureTest" time="86.061"/>
+  </testsuite>
+</testrun>

@@ -1,0 +1,217 @@
+/*
+ * (c) Copyright Christian P. Fries, Germany. All rights reserved. Contact: email@christianfries.com.
+ *
+ * Created on 01.10.2015
+ */
+
+package net.finmath.montecarlo.interestrate.products.components;
+
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.NumberFormat;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
+
+import org.joda.time.DateTimeConstants;
+import org.joda.time.LocalDate;
+import org.junit.Assert;
+import org.junit.Test;
+
+import net.finmath.exception.CalculationException;
+import net.finmath.marketdata.model.curves.DiscountCurve;
+import net.finmath.marketdata.model.curves.ForwardCurve;
+import net.finmath.montecarlo.RandomVariable;
+import net.finmath.montecarlo.interestrate.LIBORMarketModel;
+import net.finmath.montecarlo.interestrate.LIBORMarketModel.Measure;
+import net.finmath.montecarlo.interestrate.LIBORMarketModelInterface;
+import net.finmath.montecarlo.interestrate.LIBORModelMonteCarloSimulation;
+import net.finmath.montecarlo.interestrate.LIBORModelMonteCarloSimulationInterface;
+import net.finmath.montecarlo.interestrate.modelplugins.LIBORCorrelationModelExponentialDecay;
+import net.finmath.montecarlo.interestrate.modelplugins.LIBORCovarianceModelFromVolatilityAndCorrelation;
+import net.finmath.montecarlo.interestrate.modelplugins.LIBORVolatilityModelFromGivenMatrix;
+import net.finmath.montecarlo.interestrate.products.AbstractLIBORMonteCarloProduct;
+import net.finmath.montecarlo.interestrate.products.Swap;
+import net.finmath.montecarlo.interestrate.products.SwapLeg;
+import net.finmath.montecarlo.interestrate.products.Swaption;
+import net.finmath.montecarlo.interestrate.products.indices.AbstractIndex;
+import net.finmath.montecarlo.interestrate.products.indices.LIBORIndex;
+import net.finmath.montecarlo.process.ProcessEulerScheme;
+import net.finmath.stochastic.RandomVariableInterface;
+import net.finmath.time.RegularSchedule;
+import net.finmath.time.ScheduleGenerator;
+import net.finmath.time.ScheduleInterface;
+import net.finmath.time.TimeDiscretization;
+import net.finmath.time.businessdaycalendar.BusinessdayCalendarExcludingTARGETHolidays;
+import net.finmath.time.businessdaycalendar.BusinessdayCalendarInterface;
+
+/**
+ * @author Christian Fries
+ *
+ */
+public class ExposureTest {
+
+	private final NumberFormat formatter6 = new DecimalFormat("0.000000", new DecimalFormatSymbols(new Locale("en")));
+	private final DecimalFormat formatterGerman = new DecimalFormat("0.00000000", new DecimalFormatSymbols(Locale.GERMAN));
+
+
+	public static void main(String[] args) throws CalculationException {
+		/*
+		 * Create a receiver swap (receive fix, pay float)
+		 */
+		ScheduleInterface legScheduleRec = ScheduleGenerator.createScheduleFromConventions(
+				new LocalDate(2015, DateTimeConstants.JANUARY, 03) /* referenceDate */, 
+				new LocalDate(2015, DateTimeConstants.JANUARY, 06) /* startDate */,
+				new LocalDate(2025, DateTimeConstants.JANUARY, 06) /* maturityDate */,
+				ScheduleGenerator.Frequency.ANNUAL /* frequency */,
+				ScheduleGenerator.DaycountConvention.ACT_365 /* daycountConvention */,
+				ScheduleGenerator.ShortPeriodConvention.FIRST /* shortPeriodConvention */,
+				BusinessdayCalendarInterface.DateRollConvention.FOLLOWING /* dateRollConvention */,
+				new BusinessdayCalendarExcludingTARGETHolidays() /* businessdayCalendar */,
+				0 /* fixingOffsetDays */,
+				0 /* paymentOffsetDays */);
+
+		ScheduleInterface legSchedulePay = ScheduleGenerator.createScheduleFromConventions(
+				new LocalDate(2016, DateTimeConstants.FEBRUARY, 03) /* referenceDate */, 
+				new LocalDate(2015, DateTimeConstants.JANUARY, 06) /* startDate */,
+				new LocalDate(2025, DateTimeConstants.JANUARY, 06) /* maturityDate */,
+				ScheduleGenerator.Frequency.QUARTERLY /* frequency */,
+				ScheduleGenerator.DaycountConvention.ACT_365 /* daycountConvention */,
+				ScheduleGenerator.ShortPeriodConvention.FIRST /* shortPeriodConvention */,
+				BusinessdayCalendarInterface.DateRollConvention.FOLLOWING /* dateRollConvention */,
+				new BusinessdayCalendarExcludingTARGETHolidays() /* businessdayCalendar */,
+				0 /* fixingOffsetDays */,
+				0 /* paymentOffsetDays */);
+		
+		AbstractNotional notional = new Notional(1.0);
+		AbstractIndex index = new LIBORIndex("forwardCurve", 0.0, 0.25);
+		double fixedCoupon = 0.025;
+
+		SwapLeg swapLegRec = new SwapLeg(legScheduleRec, notional, null, fixedCoupon /* spread */, false /* isNotionalExchanged */);
+		SwapLeg swapLegPay = new SwapLeg(legSchedulePay, notional, index, 0.0 /* spread */, false /* isNotionalExchanged */);
+		AbstractLIBORMonteCarloProduct swap = new Swap(swapLegRec, swapLegPay);
+
+
+		LIBORModelMonteCarloSimulationInterface lmm = createLIBORMarketModel(Measure.SPOT, 100, 5, 0.1, 1234, 0.02,0.015,0.3,0.2);
+
+		// Print a single exposure path and the expected positive exposure
+		System.out.println("observationDate \t exposureOnPath \t expectedPositiveExposure");
+		for(double observationDate : lmm.getTimeDiscretization()) {
+
+			if(observationDate == 0) continue;
+			
+			/*
+			 * Calculate expected positive exposure of a swap
+			 */
+			RandomVariableInterface valuesSwap = swap.getValue(observationDate, lmm);
+
+			double expectedPositiveExposure		= valuesSwap.getQuantile(0.05);
+
+			System.out.println(formatterGerman.format(observationDate) + " \t " + formatterGerman.format(expectedPositiveExposure));
+
+			double basisPoint = 1E-4;
+			Assert.assertTrue("Expected positive exposure", expectedPositiveExposure >= 0-1*basisPoint);
+		}
+		System.out.println();		
+	}
+
+	public static LIBORModelMonteCarloSimulationInterface createLIBORMarketModel(
+			Measure measure, int numberOfPaths, int numberOfFactors, double correlationDecayParam, int seed
+			,double forwardCurveLevel, double discountCurveLevel, double volaLevel, double volaDynamik) throws CalculationException {
+
+		/*
+		 * Create the libor tenor structure and the initial values
+		 */
+		double liborPeriodLength	= 0.25;
+		double liborRateTimeHorzion	= 31.0;
+		TimeDiscretization liborPeriodDiscretization = new TimeDiscretization(0.0, (int) (liborRateTimeHorzion / liborPeriodLength), liborPeriodLength);
+
+		// Create the forward curve (initial value of the LIBOR market model)
+		ForwardCurve forwardCurve = ForwardCurve.createForwardCurveFromForwards(
+				"forwardCurve"								/* name of the curve */,
+				new double[] {0.0 , 1.0 , 2.0 , 5.0 , 40.0}	/* fixings of the forward */,
+				new double[] {forwardCurveLevel, forwardCurveLevel, forwardCurveLevel, forwardCurveLevel, forwardCurveLevel+0.05}	/* forwards */,
+				liborPeriodLength							/* tenor / period length */
+				);
+
+		// Create the discount curve
+		DiscountCurve discountCurve = DiscountCurve.createDiscountCurveFromZeroRates(
+				"discountCurve"								/* name of the curve */,
+				new double[] {0.5 , 1.0 , 2.0 , 5.0 , 40.0}	/* maturities */,
+				new double[] {discountCurveLevel, discountCurveLevel, discountCurveLevel, discountCurveLevel, discountCurveLevel+0.05}	/* zero rates */
+				);
+		
+		/*
+		 * Create a simulation time discretization
+		 */
+		double lastTime	= 30.0;
+		double dt		= 0.08333333333333333333333333333333333333333;
+		System.out.println((int) (lastTime / dt) + "   " +  30/ dt);
+		TimeDiscretization timeDiscretization = new TimeDiscretization(0.0, (int) (lastTime / dt), dt);
+
+		/*
+		 * Create a volatility structure v[i][j] = sigma_j(t_i)
+		 */
+		double[][] volatility = new double[timeDiscretization.getNumberOfTimeSteps()][liborPeriodDiscretization.getNumberOfTimeSteps()];
+		for (int timeIndex = 0; timeIndex < volatility.length; timeIndex++) {
+			for (int liborIndex = 0; liborIndex < volatility[timeIndex].length; liborIndex++) {
+				// Create a very simple volatility model here
+				double time = timeDiscretization.getTime(timeIndex);
+				double maturity = liborPeriodDiscretization.getTime(liborIndex);
+				double timeToMaturity = maturity - time;
+
+				double instVolatility;
+				if(timeToMaturity <= 0)
+					instVolatility = 0;				// This forward rate is already fixed, no volatility
+				else
+					instVolatility = volaLevel + volaDynamik * Math.exp(-0.25 * timeToMaturity);
+
+				// Store
+				volatility[timeIndex][liborIndex] = instVolatility;
+			}
+		}
+		LIBORVolatilityModelFromGivenMatrix volatilityModel = new LIBORVolatilityModelFromGivenMatrix(timeDiscretization, liborPeriodDiscretization, volatility);
+
+		/*
+		 * Create a correlation model rho_{i,j} = exp(-a * abs(T_i-T_j))
+		 */
+		LIBORCorrelationModelExponentialDecay correlationModel = new LIBORCorrelationModelExponentialDecay(
+				timeDiscretization, liborPeriodDiscretization, numberOfFactors,
+				correlationDecayParam);
+
+
+		/*
+		 * Combine volatility model and correlation model to a covariance model
+		 */
+		LIBORCovarianceModelFromVolatilityAndCorrelation covarianceModel =
+				new LIBORCovarianceModelFromVolatilityAndCorrelation(timeDiscretization,
+						liborPeriodDiscretization, volatilityModel, correlationModel);
+
+		// BlendedLocalVolatlityModel (future extension)
+		//		AbstractLIBORCovarianceModel covarianceModel2 = new BlendedLocalVolatlityModel(covarianceModel, 0.00, false);
+
+		// Set model properties
+		Map<String, String> properties = new HashMap<String, String>();
+
+		// Choose the simulation measure
+		properties.put("measure", measure.name());
+		
+		// Choose log normal model
+		properties.put("stateSpace", LIBORMarketModel.StateSpace.LOGNORMAL.name());
+
+		// Empty array of calibration items - hence, model will use given covariance
+		LIBORMarketModel.CalibrationItem[] calibrationItems = new LIBORMarketModel.CalibrationItem[0];
+
+		/*
+		 * Create corresponding LIBOR Market Model
+		 */
+		LIBORMarketModelInterface liborMarketModel = new LIBORMarketModel(
+				liborPeriodDiscretization, forwardCurve, discountCurve, covarianceModel, calibrationItems, properties);
+
+		ProcessEulerScheme process = new ProcessEulerScheme(
+				new net.finmath.montecarlo.BrownianMotion(timeDiscretization,
+						numberOfFactors, numberOfPaths, seed /* seed */), ProcessEulerScheme.Scheme.PREDICTOR_CORRECTOR);
+
+		return new LIBORModelMonteCarloSimulation(liborMarketModel, process);
+	}
+}

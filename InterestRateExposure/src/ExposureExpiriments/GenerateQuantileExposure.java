@@ -84,7 +84,7 @@ public class GenerateQuantileExposure{
 					int seed = 55233 + u + vola + volaD;
 					LIBORModelMonteCarloSimulationInterface lmm = createLIBORMarketModel(Measure.SPOT, numberofPaths, 5, 0.1, seed, forwardCurveLevel, discountCurveLevel, volaLevel, volaDynamik);
 					// loop over interest frequency
-					for(ScheduleGenerator.Frequency frequency : Arrays.copyOfRange(ScheduleGenerator.Frequency.values(), 3, ScheduleGenerator.Frequency.values().length-3)){	// frequencies: MONTHLY, QUARTERLY, SEMIANNUAL, ANNUAL
+					for(ScheduleGenerator.Frequency frequency : Arrays.copyOfRange(ScheduleGenerator.Frequency.values(), 3, ScheduleGenerator.Frequency.values().length-1)){	// frequencies: MONTHLY, QUARTERLY, SEMIANNUAL, ANNUAL
 						// loop over swap maturity
 						for(int timeToMaturityNumber = 1; timeToMaturityNumber < 31; timeToMaturityNumber++){					// maturity 1 - 15
 							int yyyy = 2016 + timeToMaturityNumber;
